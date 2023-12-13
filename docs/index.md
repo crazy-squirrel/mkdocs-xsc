@@ -56,10 +56,10 @@ Create grids as following.
 
 <div class="grid cards" markdown>
 
-* Advantage1
-* Advantage2
-* Advantage3
-* Advantage4
+- Inroduction
+- Relative Work
+- Experiment
+- Conclusion
 
 </div>
 
@@ -67,10 +67,36 @@ Create grids as following.
 
 Image cam be added by HTML.
 
-<figure markdown>
-  ![Image title](https://dummyimage.com/600x400/){ width="300" }
-  <figcaption>Image caption</figcaption>
-</figure>
+=== "From Web"
 
+    <figure markdown>
+      ![Image title](https://dummyimage.com/600x400/){ width="300" }
+      <figcaption>From Web</figcaption>
+    </figure>
 
+=== "From Local"
 
+    <figure markdown>
+      ![Image title](./Image/squirrel.jpg){ width="300" }
+      <figcaption>From Local</figcaption>
+    </figure>
+
+## math
+
+Syntax block as Following.
+
+$$
+\int^{\pi}_0 sinx dx = 2
+$$
+
+Inline syntax as $sinx = \lim_{n \to \infty}\sum^n_0 (-1)^{n}\frac{1}{(2n+1)!} x^{2n+1}$
+
+## emoji
+
+Search the emoji from the [`database`][database].
+
+:smiley: :sweat_smile: :smiling_face_with_3_hearts: :fox: :man_mage:
+
+[database]: https://squidfunk.github.io/mkdocs-material/reference/icons-emojis/
+
+# To Be Added
