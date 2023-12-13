@@ -1,4 +1,4 @@
-site_name: xsc learning notes
+site_name: XSC Learning Notes
 
 site_url: https://crazy-squirrel.github.io/mkdocs-xsc
 
@@ -11,9 +11,11 @@ theme:
     - navigation.footer
     - search.suggest
     - search.highlight
+    - search.share
     - content.tabs.link
     - content.code.annotate
     - content.code.copy
+    - toc.follow
   language: en
   palette:
     - scheme: default
@@ -60,6 +62,8 @@ markdown_extensions:
       generic: true
   - pymdownx.emoji:
       emoji_index: !!python/name:material.extensions.emoji.twemoji
+  - pymdownx.tabbed:
+      alternate_style: true
   - pymdownx.inlinehilite
   - pymdownx.snippets
   - admonition
@@ -68,6 +72,8 @@ markdown_extensions:
   - pymdownx.superfences
   - pymdownx.mark
   - attr_list
+  - md_in_html
+  - tables
 
 copyright: |
   &copy; 2023 <a href="https://github.com/crazy-squirrel"  target="_blank" rel="noopener">Songchen Xu</a>
