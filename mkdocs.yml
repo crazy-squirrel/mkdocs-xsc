@@ -9,6 +9,7 @@ theme:
     - navigation.sections
     - navigation.top
     - navigation.footer
+    - navigation.indexes
     - search.suggest
     - search.highlight
     - search.share
@@ -23,13 +24,13 @@ theme:
         icon: material/weather-night
         name: Switch to dark mode
       primary: indigo
-      accent: indigo
+      accent: cyan
     - scheme: slate 
       toggle:
         icon: material/weather-sunny
         name: Switch to light mode    
       primary: teal
-      accent: teal
+      accent: lime
 
 extra:
   social:
@@ -44,20 +45,25 @@ extra_javascript:
 nav:
   - Home: index.md
   - Paper Reading:
-    - Paper Reading/index.md
-    - Chp1: Paper Reading/Chp1.md
-    - Chp2: Paper Reading/Chp2.md
-    - Chp3: Paper Reading/Chp3.md
+    - Paper-Reading/index.md
+    - on_orbit accelerator: Paper-Reading/on_orbit-accelerator.md
+    - Chp2: Paper-Reading/Chp2.md
+    - Chp3: Paper-Reading/Chp3.md
   - Digital IC:
-    - Digital IC/index.md
-    - Chp1: Digital IC/Chp1.md
-    - Chp2: Digital IC/Chp2.md
-    - Chp3: Digital IC/Chp3.md
+    - Digital-IC/index.md
+    - Chp1: Digital-IC/Chp1.md
+    - Chp2: Digital-IC/Chp2.md
+    - Chp3: Digital-IC/Chp3.md
   - Verilog:
     - Verilog/index.md
     - Chp1: Verilog/Chp1.md
     - Chp2: Verilog/Chp2.md
     - Chp3: Verilog/Chp3.md
+  - Deep Learning:
+    - Deep-Learning/index.md
+    - Chp1: Deep-Learning/Chp1.md
+    - Chp2: Deep-Learning/Chp2.md
+    - Chp3: Deep-Learning/Chp3.md
   - About Me: about.md
 
 markdown_extensions:

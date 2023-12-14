@@ -1,7 +1,7 @@
 {
     "typescript.tsdk": "node_modules/typescript/lib",
     "yaml.schemas": {
-      "docs/schema.json": "mkdocs.yml"
+      "docs/schema.json": "../mkdocs.yml"
     },
     "yaml.customTags": [
       "!ENV scalar",
