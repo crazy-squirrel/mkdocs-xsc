@@ -65,6 +65,8 @@ ZYNQ分为两大部分——PS和PL：
   <figcaption> Execution time </figcaption>
 </figure>
 
+
+
 ## [`CloudSatNet-1: FPGA-Based Hardware-Accelerated Quantized CNN for Satellite On-Board Cloud Coverage Classification`][2]
 
 [2]: https://www.semanticscholar.org/reader/5117475276af7c26e1f237241159d72ebda16f13
@@ -210,6 +212,8 @@ snow/ice类别与cloud coverage比较像，难以有效识别.
 !!! example "没有具体说怎么控制network throughput. "
 
     Based on the estimated number of cycles per layer reported in Table 3, it is visible that a bottle-neck in the first layer limited the optimal throughput, and it would require a change in the network architecture to allow a higher throughput target. It was demonstrated that the network throughput can be controlled to target a specific FPS desired by the needs of the mission.
+
+
 
 ## [`FPGA-Based Implementation of Ship Detection for Satellite On-Board Processing`][3]
 
@@ -405,6 +409,8 @@ Compare with other devices using the same algorithm. Using __OPENCV__ to add som
 
 !!! example "What is FPGA with pipeline and HLS?"
 
+
+
 ## [`An FPGA-Based Hybrid Neural Network Accelerator for Embedded Satellite Image Classification`][4]
 
 [4]: https://ieeexplore.ieee.org/document/9180625
@@ -495,6 +501,7 @@ __Integrating__ weighted input events, __triggering__ an output event when the a
     </figure>
 
 
+
 ## [`FPGA-based Satellite Image Classification for Water Bodies Detection`][5]
 
 [5]: https://ieeexplore.ieee.org/document/9171811
@@ -529,6 +536,8 @@ If the project to be implemented requires __lot of calculations__ and they have 
 
 !!! example "decision tree时CPU比FPGA快400倍，minimun distance时FPGA比CPU快4.5倍."
 
+
+
 ## [`FPGA Implementation of a Hardware Optimized Automatic Target Detection and Classification Algorithm for Hyperspectral Image Analysis`][6]
 
 [6]: https://ieeexplore.ieee.org/stamp/stamp.jsp?tp=&arnumber=9817130
@@ -545,11 +554,6 @@ If the project to be implemented requires __lot of calculations__ and they have 
 * __Advantage__: Execution time and power consumption
 
 </div>
-
-
-
-
-
 
 
 
@@ -700,21 +704,44 @@ Deploy on Zynq Ultrascale+ ZCU106 Development Board and __rad-hard__ Xilinx Kint
 
 `benchmark`
 
-- technology
+- fault tolerance :smiley:
 
+__Increased clock frequencies__, __reduced feature sizes__, and __reduced supply and threshold voltages__, harm the fault tolerance of the circuit.
+<br>FPGA有更好的fault tolerance, 有更高的LET (TID高并不构成优势).
 
+<figure markdown>
+  ![Image title](./Image/7/1-7-10.jpeg){ width="500" }
+  <figcaption> Examples of accelerator outputs </figcaption>
+</figure>
 
+- cost :smiling_face_with_tear:
 
+Bad environment(wide range of temperature, absence of convection, strong vibrations...)
+<br/>-> Complex producing
+<br/>-> High cost
 
-- inference time
+- flexibility :smiley:
 
+Allowing algorithms and functionalities to be implemented.
 
+- developing time :smiling_face_with_tear:
 
-- power consumption
+The FPGA design flow consists of various phases, such as __coding__, __functional simulation__, __synthesis__ and __implementation__, and __system validation__.
 
+- inference time :smiley:
 
+rad-hard device需要额外的protection logic, 导致频率降低能耗增加.
+<br/>This framework chooses values for the configurable parameters of the accelerator with the purpose to minimize the inference time, at the cost of hardware resources and power consumption.
 
+<figure markdown>
+  ![Image title](./Image/7/1-7-11.jpeg){ width="500" }
+  <figcaption> Results summary for XCZU7EV, XQRKU060, and Myriad-2 VPU </figcaption>
+</figure>
 
+- power consumption :smiling_face_with_tear:
+
+FPGAs have greater __static__ power consumption, VPU consumes few mW in its __idle state__.
+<br>-> FPGA suitable for online task(continuous infenrence) & VPU suitable for offline task(often rest in idle state).
 
 ### Question
 
@@ -725,28 +752,84 @@ Deploy on Zynq Ultrascale+ ZCU106 Development Board and __rad-hard__ Xilinx Kint
 
 [8]: https://ieeexplore.ieee.org/document/10227207
 
+### Summary
 
+`基于FPGA的1位宽检测网络`
 
+<div class="grid cards" markdown>
 
+* __Application__: Cloud detection
+* __Dataset__: By the Sentinel-2 satellite
+* __Device__: Xilinx Kintex7 410T FPGA
 
+</div>
 
+`work flow`
 
+<figure markdown>
+  ![Image title](./Image/8/1-8-1.jpeg){ width="500" }
+  <figcaption> Cloud classification on-board satellite payload architecture </figcaption>
+</figure>
 
+`H-BNN architecture`
 
+Convolution -> BinaryConvolution
+<br/>Activation -> Sign
+<br/>Multiplication -> Multiplexer
 
+<figure markdown>
+  ![Image title](./Image/8/1-8-2.jpeg){ width="500" }
+  <figcaption> Proposed FPGA-based binarized convolutional neural network </figcaption>
+</figure>
 
+2:1 multiplexer can be implemented with a simple logic gate.
 
+<figure markdown>
+  ![Image title](./Image/8/1-8-3.jpeg){ width="500" }
+  <figcaption> Binary convolution in hardware design </figcaption>
+</figure>
 
+!!! tip
 
+    BNs reduce __sensitivity__ to minor input changes, preventing __vanishing gradient__ problem, and __accelerating__ the training process.
+
+`system architecture`
+
+<figure markdown>
+  ![Image title](./Image/8/1-8-4.jpeg){ width="500" }
+  <figcaption> Hardware implementation architecute of proposed H-BNN </figcaption>
+</figure>
+
+!!! tip "并不是所有数据都是1-bitwise, 仅在convolution进行简化，其他地方仍按正常数据处理."
+
+### Question
+
+!!! example "convolution layer weight变为2：1multiplexer的选择端, 怎么计算梯度并反向传播."
 
 
 ## (Literature Review)[`A Survey of FPGA-based Accelerators for Convolutional Neural Networks`][9]
 
 [9]: https://embdev.net/attachment/378695/2018_NCAA_Mittal_FPGA_Accelerator_CNN.pdf
 
+
+
+
 ## [`Tile-Grained Pipeline Architecture for Low Latency CNN Inference`][10]
 
 [10]: https://vast.cs.ucla.edu/sites/default/files/publications/PID5488167.pdf
+
+### Summary
+
+``
+
+<div class="grid cards" markdown>
+
+* __Application__: Cloud detection
+* __Dataset__: By the Sentinel-2 satellite
+* __Device__: Xilinx Kintex7 410T FPGA
+
+</div>
+
 
 ## [`A High Performance FPGA-based Accelerator for  Large-Scale Convolutional Neural Networks`][11]
 
@@ -755,6 +838,24 @@ Deploy on Zynq Ultrascale+ ZCU106 Development Board and __rad-hard__ Xilinx Kint
 ## [`MEM-OPT: A Scheduling and Data Re-Use System to Optimize On-Chip Memory Usage for CNNs On-Board FPGAs`][12]
 
 [12]: https://ieeexplore.ieee.org/document/9163269
+
+### Summary
+
+`针对CNN部署的FPGA内存优化`
+
+<div class="grid cards" markdown>
+
+* __Trade-off__: Bandwidth and on-chip memory
+* __Device__: Xilinx XC7Z020
+* __Scheduling algorithm__
+* __Data re-use system__
+
+</div>
+
+
+
+
+
 
 ## [`A Complete Design Flow for Mapping CNN Onto Embedded FPGA`][13]
 
