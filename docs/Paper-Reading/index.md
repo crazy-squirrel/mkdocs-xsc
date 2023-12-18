@@ -6,12 +6,12 @@ This page is used for note taking when reading papers.
 
 # Link To Jump
 
-- [`on_orbit accelerator`][on_orbit-accelerator]: Do some research about embadded devices (mainly FPGA) for on_orbit neural network accelerating application. 
+- [`On_orbit Accelerator`][On_orbit-Accelerator]: Do some research about embadded devices (mainly FPGA) for on_orbit neural network accelerating application. 
 
 - [`Chp2`][Chp2]: ...
 
 - [`Chp3`][Chp3]: ...
 
-[on_orbit-accelerator]: ./on_orbit-accelerator.md
+[On_orbit-Accelerator]: ./On_orbit-Accelerator.md
 [Chp2]: ./Chp2.md
 [Chp3]: ./Chp3.md

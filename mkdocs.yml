@@ -46,7 +46,7 @@ nav:
   - Home: index.md
   - Paper Reading:
     - Paper-Reading/index.md
-    - on_orbit accelerator: Paper-Reading/on_orbit-accelerator.md
+    - On_orbit Accelerator: Paper-Reading/On_orbit-Accelerator.md
     - Chp2: Paper-Reading/Chp2.md
     - Chp3: Paper-Reading/Chp3.md
   - Digital IC:
@@ -61,8 +61,8 @@ nav:
     - Chp3: Verilog/Chp3.md
   - Deep Learning:
     - Deep-Learning/index.md
-    - Chp1: Deep-Learning/Chp1.md
-    - Chp2: Deep-Learning/Chp2.md
+    - Chp1: Deep-Learning/Quantization.md
+    - Chp2: Deep-Learning/Spiking-Neural-Network.md
     - Chp3: Deep-Learning/Chp3.md
   - About Me: about.md
 
