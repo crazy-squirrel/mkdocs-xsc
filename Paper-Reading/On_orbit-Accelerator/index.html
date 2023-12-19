@@ -1,0 +1,2558 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+      
+      
+        <link rel="canonical" href="https://crazy-squirrel.github.io/mkdocs-xsc/Paper-Reading/On_orbit-Accelerator/">
+      
+      
+        <link rel="prev" href="../">
+      
+      
+        <link rel="next" href="../Chp2/">
+      
+      
+      <link rel="icon" href="../../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.5.3, mkdocs-material-9.5.2">
+    
+    
+      
+        <title>On_orbit Accelerator - XSC Learning Notes</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../assets/stylesheets/main.50c56a3b.min.css">
+      
+        
+        <link rel="stylesheet" href="../../assets/stylesheets/palette.06af60db.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+    <script>__md_scope=new URL("../..",location),__md_hash=e=>[...e].reduce((e,_)=>(e<<5)-e+_.charCodeAt(0),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+    
+  </head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="cyan">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#soc-fpga-acceleration-for-semantic-segmentation-of-clouds-in-satellite-images" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+<header class="md-header" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href="../.." title="XSC Learning Notes" class="md-header__button md-logo" aria-label="XSC Learning Notes" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54Z"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3V6m0 5h18v2H3v-2m0 5h18v2H3v-2Z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            XSC Learning Notes
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              On_orbit Accelerator
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+        <form class="md-header__option" data-md-component="palette">
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="cyan"  aria-label="Switch to dark mode"  type="radio" name="__palette" id="__palette_0">
+    
+      <label class="md-header__button md-icon" title="Switch to dark mode" for="__palette_1" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="m17.75 4.09-2.53 1.94.91 3.06-2.63-1.81-2.63 1.81.91-3.06-2.53-1.94L12.44 4l1.06-3 1.06 3 3.19.09m3.5 6.91-1.64 1.25.59 1.98-1.7-1.17-1.7 1.17.59-1.98L15.75 11l2.06-.05L18.5 9l.69 1.95 2.06.05m-2.28 4.95c.83-.08 1.72 1.1 1.19 1.85-.32.45-.66.87-1.08 1.27C15.17 23 8.84 23 4.94 19.07c-3.91-3.9-3.91-10.24 0-14.14.4-.4.82-.76 1.27-1.08.75-.53 1.93.36 1.85 1.19-.27 2.86.69 5.83 2.89 8.02a9.96 9.96 0 0 0 8.02 2.89m-1.64 2.02a12.08 12.08 0 0 1-7.8-3.47c-2.17-2.19-3.33-5-3.49-7.82-2.81 3.14-2.7 7.96.31 10.98 3.02 3.01 7.84 3.12 10.98.31Z"/></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="" data-md-color-scheme="slate" data-md-color-primary="teal" data-md-color-accent="lime"  aria-label="Switch to light mode"  type="radio" name="__palette" id="__palette_1">
+    
+      <label class="md-header__button md-icon" title="Switch to light mode" for="__palette_0" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 7a5 5 0 0 1 5 5 5 5 0 0 1-5 5 5 5 0 0 1-5-5 5 5 0 0 1 5-5m0 2a3 3 0 0 0-3 3 3 3 0 0 0 3 3 3 3 0 0 0 3-3 3 3 0 0 0-3-3m0-7 2.39 3.42C13.65 5.15 12.84 5 12 5c-.84 0-1.65.15-2.39.42L12 2M3.34 7l4.16-.35A7.2 7.2 0 0 0 5.94 8.5c-.44.74-.69 1.5-.83 2.29L3.34 7m.02 10 1.76-3.77a7.131 7.131 0 0 0 2.38 4.14L3.36 17M20.65 7l-1.77 3.79a7.023 7.023 0 0 0-2.38-4.15l4.15.36m-.01 10-4.14.36c.59-.51 1.12-1.14 1.54-1.86.42-.73.69-1.5.83-2.29L20.64 17M12 22l-2.41-3.44c.74.27 1.55.44 2.41.44.82 0 1.63-.17 2.37-.44L12 22Z"/></svg>
+      </label>
+    
+  
+</form>
+      
+    
+    
+      <script>var media,input,key,value,palette=__md_get("__palette");if(palette&&palette.color){"(prefers-color-scheme)"===palette.color.media&&(media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']"),palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent"));for([key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      <label class="md-header__button md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5Z"/></svg>
+      </label>
+      <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5Z"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12Z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+          <a href="javascript:void(0)" class="md-search__icon md-icon" title="Share" aria-label="Share" data-clipboard data-clipboard-text="" data-md-component="search-share" tabindex="-1">
+            
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M18 16.08c-.76 0-1.44.3-1.96.77L8.91 12.7c.05-.23.09-.46.09-.7 0-.24-.04-.47-.09-.7l7.05-4.11c.54.5 1.25.81 2.04.81a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3c0 .24.04.47.09.7L8.04 9.81C7.5 9.31 6.79 9 6 9a3 3 0 0 0-3 3 3 3 0 0 0 3 3c.79 0 1.5-.31 2.04-.81l7.12 4.15c-.05.21-.08.43-.08.66 0 1.61 1.31 2.91 2.92 2.91 1.61 0 2.92-1.3 2.92-2.91A2.92 2.92 0 0 0 18 16.08Z"/></svg>
+          </a>
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12 19 6.41Z"/></svg>
+        </button>
+      </nav>
+      
+        <div class="md-search__suggest" data-md-component="search-suggest"></div>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+            
+<nav class="md-tabs" aria-label="Tabs" data-md-component="tabs">
+  <div class="md-grid">
+    <ul class="md-tabs__list">
+      
+        
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../.." class="md-tabs__link">
+        
+  
+    
+  
+  Home
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+    
+  
+  
+    
+    
+      <li class="md-tabs__item md-tabs__item--active">
+        <a href="../" class="md-tabs__link">
+          
+  
+    
+  
+  Paper Reading
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../Digital-IC/" class="md-tabs__link">
+          
+  
+    
+  
+  Digital IC
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../Verilog/" class="md-tabs__link">
+          
+  
+    
+  
+  Verilog
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../Deep-Learning/" class="md-tabs__link">
+          
+  
+    
+  
+  Deep Learning
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../about/" class="md-tabs__link">
+        
+  
+    
+  
+  About Me
+
+      </a>
+    </li>
+  
+
+      
+    </ul>
+  </div>
+</nav>
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+  
+
+
+<nav class="md-nav md-nav--primary md-nav--lifted" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../.." title="XSC Learning Notes" class="md-nav__button md-logo" aria-label="XSC Learning Notes" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54Z"/></svg>
+
+    </a>
+    XSC Learning Notes
+  </label>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../.." class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Home
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+    
+      
+      
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2" checked>
+        
+          
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../" class="md-nav__link ">
+              
+  
+  <span class="md-ellipsis">
+    Paper Reading
+  </span>
+  
+
+            </a>
+            
+              
+              <label class="md-nav__link " for="__nav_2" id="__nav_2_label" tabindex="">
+                <span class="md-nav__icon md-icon"></span>
+              </label>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_2_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_2">
+            <span class="md-nav__icon md-icon"></span>
+            Paper Reading
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  <span class="md-ellipsis">
+    On_orbit Accelerator
+  </span>
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  <span class="md-ellipsis">
+    On_orbit Accelerator
+  </span>
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#soc-fpga-acceleration-for-semantic-segmentation-of-clouds-in-satellite-images" class="md-nav__link">
+    <span class="md-ellipsis">
+      SoC FPGA Acceleration for Semantic Segmentation of Clouds in Satellite Images
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="SoC FPGA Acceleration for Semantic Segmentation of Clouds in Satellite Images">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#summary" class="md-nav__link">
+    <span class="md-ellipsis">
+      Summary
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#cloudsatnet-1-fpga-based-hardware-accelerated-quantized-cnn-for-satellite-on-board-cloud-coverage-classification" class="md-nav__link">
+    <span class="md-ellipsis">
+      CloudSatNet-1: FPGA-Based Hardware-Accelerated Quantized CNN for Satellite On-Board Cloud Coverage Classification
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="CloudSatNet-1: FPGA-Based Hardware-Accelerated Quantized CNN for Satellite On-Board Cloud Coverage Classification">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#summary_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      Summary
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#question" class="md-nav__link">
+    <span class="md-ellipsis">
+      Question
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#fpga-based-implementation-of-ship-detection-for-satellite-on-board-processing" class="md-nav__link">
+    <span class="md-ellipsis">
+      FPGA-Based Implementation of Ship Detection for Satellite On-Board Processing
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="FPGA-Based Implementation of Ship Detection for Satellite On-Board Processing">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#summary_2" class="md-nav__link">
+    <span class="md-ellipsis">
+      Summary
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#question_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      Question
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#an-fpga-based-hybrid-neural-network-accelerator-for-embedded-satellite-image-classification" class="md-nav__link">
+    <span class="md-ellipsis">
+      An FPGA-Based Hybrid Neural Network Accelerator for Embedded Satellite Image Classification
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="An FPGA-Based Hybrid Neural Network Accelerator for Embedded Satellite Image Classification">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#summary_3" class="md-nav__link">
+    <span class="md-ellipsis">
+      Summary
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#question_2" class="md-nav__link">
+    <span class="md-ellipsis">
+      Question
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#fpga-based-satellite-image-classification-for-water-bodies-detection" class="md-nav__link">
+    <span class="md-ellipsis">
+      FPGA-based Satellite Image Classification for Water Bodies Detection
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="FPGA-based Satellite Image Classification for Water Bodies Detection">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#summary_4" class="md-nav__link">
+    <span class="md-ellipsis">
+      Summary
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#fpga-implementation-of-a-hardware-optimized-automatic-target-detection-and-classification-algorithm-for-hyperspectral-image-analysis" class="md-nav__link">
+    <span class="md-ellipsis">
+      FPGA Implementation of a Hardware Optimized Automatic Target Detection and Classification Algorithm for Hyperspectral Image Analysis
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="FPGA Implementation of a Hardware Optimized Automatic Target Detection and Classification Algorithm for Hyperspectral Image Analysis">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#summary_5" class="md-nav__link">
+    <span class="md-ellipsis">
+      Summary
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#an-fpga-based-hardware-accelerator-for-cnns-inference-on-board-satellites-benchmarking-with-myriad-2-based-solution-for-the-cloudscout-case-study" class="md-nav__link">
+    <span class="md-ellipsis">
+      An FPGA-Based Hardware Accelerator for CNNs Inference on Board Satellites: Benchmarking with Myriad 2-Based Solution for the CloudScout Case Study
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="An FPGA-Based Hardware Accelerator for CNNs Inference on Board Satellites: Benchmarking with Myriad 2-Based Solution for the CloudScout Case Study">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#summary_6" class="md-nav__link">
+    <span class="md-ellipsis">
+      Summary
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#question_3" class="md-nav__link">
+    <span class="md-ellipsis">
+      Question
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#h-bnn-fpga-based-binarized-convolutional-neural-network-for-cloud-detection-on-satellite-payload" class="md-nav__link">
+    <span class="md-ellipsis">
+      H-BNN: FPGA-based binarized convolutional neural network for cloud detection on satellite payload
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="H-BNN: FPGA-based binarized convolutional neural network for cloud detection on satellite payload">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#summary_7" class="md-nav__link">
+    <span class="md-ellipsis">
+      Summary
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#question_4" class="md-nav__link">
+    <span class="md-ellipsis">
+      Question
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#literature-reviewa-survey-of-fpga-based-accelerators-for-convolutional-neural-networks" class="md-nav__link">
+    <span class="md-ellipsis">
+      (Literature Review)A Survey of FPGA-based Accelerators for Convolutional Neural Networks
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#tile-grained-pipeline-architecture-for-low-latency-cnn-inference" class="md-nav__link">
+    <span class="md-ellipsis">
+      Tile-Grained Pipeline Architecture for Low Latency CNN Inference
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Tile-Grained Pipeline Architecture for Low Latency CNN Inference">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#summary_8" class="md-nav__link">
+    <span class="md-ellipsis">
+      Summary
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#a-high-performance-fpga-based-accelerator-for-large-scale-convolutional-neural-networks" class="md-nav__link">
+    <span class="md-ellipsis">
+      A High Performance FPGA-based Accelerator for  Large-Scale Convolutional Neural Networks
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#mem-opt-a-scheduling-and-data-re-use-system-to-optimize-on-chip-memory-usage-for-cnns-on-board-fpgas" class="md-nav__link">
+    <span class="md-ellipsis">
+      MEM-OPT: A Scheduling and Data Re-Use System to Optimize On-Chip Memory Usage for CNNs On-Board FPGAs
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="MEM-OPT: A Scheduling and Data Re-Use System to Optimize On-Chip Memory Usage for CNNs On-Board FPGAs">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#summary_9" class="md-nav__link">
+    <span class="md-ellipsis">
+      Summary
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#a-complete-design-flow-for-mapping-cnn-onto-embedded-fpga" class="md-nav__link">
+    <span class="md-ellipsis">
+      A Complete Design Flow for Mapping CNN Onto Embedded FPGA
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#literature-reviewdeep-learning-on-fpgas-past-present-and-future" class="md-nav__link">
+    <span class="md-ellipsis">
+      (Literature Review)Deep Learning on FPGAs Past, Present, and Future
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Chp2/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Chp2
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Chp3/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Chp3
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+    
+      
+      
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3" >
+        
+          
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../../Digital-IC/" class="md-nav__link ">
+              
+  
+  <span class="md-ellipsis">
+    Digital IC
+  </span>
+  
+
+            </a>
+            
+              
+              <label class="md-nav__link " for="__nav_3" id="__nav_3_label" tabindex="">
+                <span class="md-nav__icon md-icon"></span>
+              </label>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_3_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3">
+            <span class="md-nav__icon md-icon"></span>
+            Digital IC
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Digital-IC/Chp1/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Chp1
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Digital-IC/Chp2/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Chp2
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Digital-IC/Chp3/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Chp3
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+    
+      
+      
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4" >
+        
+          
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../../Verilog/" class="md-nav__link ">
+              
+  
+  <span class="md-ellipsis">
+    Verilog
+  </span>
+  
+
+            </a>
+            
+              
+              <label class="md-nav__link " for="__nav_4" id="__nav_4_label" tabindex="">
+                <span class="md-nav__icon md-icon"></span>
+              </label>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_4_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_4">
+            <span class="md-nav__icon md-icon"></span>
+            Verilog
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Verilog/Chp1/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Chp1
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Verilog/Chp2/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Chp2
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Verilog/Chp3/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Chp3
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+    
+      
+      
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_5" >
+        
+          
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../../Deep-Learning/" class="md-nav__link ">
+              
+  
+  <span class="md-ellipsis">
+    Deep Learning
+  </span>
+  
+
+            </a>
+            
+              
+              <label class="md-nav__link " for="__nav_5" id="__nav_5_label" tabindex="">
+                <span class="md-nav__icon md-icon"></span>
+              </label>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_5_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_5">
+            <span class="md-nav__icon md-icon"></span>
+            Deep Learning
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Deep-Learning/Quantization/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Chp1
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Deep-Learning/Spiking-Neural-Network/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Chp2
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Deep-Learning/Chp3/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Chp3
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../about/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    About Me
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#soc-fpga-acceleration-for-semantic-segmentation-of-clouds-in-satellite-images" class="md-nav__link">
+    <span class="md-ellipsis">
+      SoC FPGA Acceleration for Semantic Segmentation of Clouds in Satellite Images
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="SoC FPGA Acceleration for Semantic Segmentation of Clouds in Satellite Images">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#summary" class="md-nav__link">
+    <span class="md-ellipsis">
+      Summary
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#cloudsatnet-1-fpga-based-hardware-accelerated-quantized-cnn-for-satellite-on-board-cloud-coverage-classification" class="md-nav__link">
+    <span class="md-ellipsis">
+      CloudSatNet-1: FPGA-Based Hardware-Accelerated Quantized CNN for Satellite On-Board Cloud Coverage Classification
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="CloudSatNet-1: FPGA-Based Hardware-Accelerated Quantized CNN for Satellite On-Board Cloud Coverage Classification">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#summary_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      Summary
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#question" class="md-nav__link">
+    <span class="md-ellipsis">
+      Question
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#fpga-based-implementation-of-ship-detection-for-satellite-on-board-processing" class="md-nav__link">
+    <span class="md-ellipsis">
+      FPGA-Based Implementation of Ship Detection for Satellite On-Board Processing
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="FPGA-Based Implementation of Ship Detection for Satellite On-Board Processing">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#summary_2" class="md-nav__link">
+    <span class="md-ellipsis">
+      Summary
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#question_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      Question
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#an-fpga-based-hybrid-neural-network-accelerator-for-embedded-satellite-image-classification" class="md-nav__link">
+    <span class="md-ellipsis">
+      An FPGA-Based Hybrid Neural Network Accelerator for Embedded Satellite Image Classification
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="An FPGA-Based Hybrid Neural Network Accelerator for Embedded Satellite Image Classification">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#summary_3" class="md-nav__link">
+    <span class="md-ellipsis">
+      Summary
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#question_2" class="md-nav__link">
+    <span class="md-ellipsis">
+      Question
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#fpga-based-satellite-image-classification-for-water-bodies-detection" class="md-nav__link">
+    <span class="md-ellipsis">
+      FPGA-based Satellite Image Classification for Water Bodies Detection
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="FPGA-based Satellite Image Classification for Water Bodies Detection">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#summary_4" class="md-nav__link">
+    <span class="md-ellipsis">
+      Summary
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#fpga-implementation-of-a-hardware-optimized-automatic-target-detection-and-classification-algorithm-for-hyperspectral-image-analysis" class="md-nav__link">
+    <span class="md-ellipsis">
+      FPGA Implementation of a Hardware Optimized Automatic Target Detection and Classification Algorithm for Hyperspectral Image Analysis
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="FPGA Implementation of a Hardware Optimized Automatic Target Detection and Classification Algorithm for Hyperspectral Image Analysis">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#summary_5" class="md-nav__link">
+    <span class="md-ellipsis">
+      Summary
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#an-fpga-based-hardware-accelerator-for-cnns-inference-on-board-satellites-benchmarking-with-myriad-2-based-solution-for-the-cloudscout-case-study" class="md-nav__link">
+    <span class="md-ellipsis">
+      An FPGA-Based Hardware Accelerator for CNNs Inference on Board Satellites: Benchmarking with Myriad 2-Based Solution for the CloudScout Case Study
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="An FPGA-Based Hardware Accelerator for CNNs Inference on Board Satellites: Benchmarking with Myriad 2-Based Solution for the CloudScout Case Study">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#summary_6" class="md-nav__link">
+    <span class="md-ellipsis">
+      Summary
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#question_3" class="md-nav__link">
+    <span class="md-ellipsis">
+      Question
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#h-bnn-fpga-based-binarized-convolutional-neural-network-for-cloud-detection-on-satellite-payload" class="md-nav__link">
+    <span class="md-ellipsis">
+      H-BNN: FPGA-based binarized convolutional neural network for cloud detection on satellite payload
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="H-BNN: FPGA-based binarized convolutional neural network for cloud detection on satellite payload">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#summary_7" class="md-nav__link">
+    <span class="md-ellipsis">
+      Summary
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#question_4" class="md-nav__link">
+    <span class="md-ellipsis">
+      Question
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#literature-reviewa-survey-of-fpga-based-accelerators-for-convolutional-neural-networks" class="md-nav__link">
+    <span class="md-ellipsis">
+      (Literature Review)A Survey of FPGA-based Accelerators for Convolutional Neural Networks
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#tile-grained-pipeline-architecture-for-low-latency-cnn-inference" class="md-nav__link">
+    <span class="md-ellipsis">
+      Tile-Grained Pipeline Architecture for Low Latency CNN Inference
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Tile-Grained Pipeline Architecture for Low Latency CNN Inference">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#summary_8" class="md-nav__link">
+    <span class="md-ellipsis">
+      Summary
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#a-high-performance-fpga-based-accelerator-for-large-scale-convolutional-neural-networks" class="md-nav__link">
+    <span class="md-ellipsis">
+      A High Performance FPGA-based Accelerator for  Large-Scale Convolutional Neural Networks
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#mem-opt-a-scheduling-and-data-re-use-system-to-optimize-on-chip-memory-usage-for-cnns-on-board-fpgas" class="md-nav__link">
+    <span class="md-ellipsis">
+      MEM-OPT: A Scheduling and Data Re-Use System to Optimize On-Chip Memory Usage for CNNs On-Board FPGAs
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="MEM-OPT: A Scheduling and Data Re-Use System to Optimize On-Chip Memory Usage for CNNs On-Board FPGAs">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#summary_9" class="md-nav__link">
+    <span class="md-ellipsis">
+      Summary
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#a-complete-design-flow-for-mapping-cnn-onto-embedded-fpga" class="md-nav__link">
+    <span class="md-ellipsis">
+      A Complete Design Flow for Mapping CNN Onto Embedded FPGA
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#literature-reviewdeep-learning-on-fpgas-past-present-and-future" class="md-nav__link">
+    <span class="md-ellipsis">
+      (Literature Review)Deep Learning on FPGAs Past, Present, and Future
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+  <h1>On_orbit Accelerator</h1>
+
+<h2 id="soc-fpga-acceleration-for-semantic-segmentation-of-clouds-in-satellite-images"><a href="https://ieeexplore.ieee.org/document/9939585"><code>SoC FPGA Acceleration for Semantic Segmentation of Clouds in Satellite Images</code></a></h2>
+<h3 id="summary">Summary</h3>
+<p><code>卫星图像语义分割</code></p>
+<div class="grid cards">
+<ul>
+<li><strong>Network</strong>: Lightweight Dilation U-Net</li>
+<li><strong>Dataset</strong>: 95-Cloud Dataset</li>
+<li><strong>Device</strong>: Xilinx MPSoC FPGA</li>
+<li><strong>Platform</strong>: Vitis AI framework</li>
+</ul>
+</div>
+<p><code>trade-off</code></p>
+<ul>
+<li>accuracy</li>
+<li>execution time &amp; hardware resources</li>
+</ul>
+<p><code>LD-UNet</code>
+LD-UNet是UNet的简化版，减少computational cost和memory footprint，同时保持competitive performance.</p>
+<table>
+<thead>
+<tr>
+<th style="text-align: center;"></th>
+<th style="text-align: center;">LD-UNet</th>
+<th style="text-align: center;">UNet</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: center;">downsampling and upsampling</td>
+<td style="text-align: center;">2</td>
+<td style="text-align: center;">4</td>
+</tr>
+<tr>
+<td style="text-align: center;">convolution</td>
+<td style="text-align: center;">Dilation Residual Block</td>
+<td style="text-align: center;">standard</td>
+</tr>
+</tbody>
+</table>
+<figure>
+<p><img alt="Image title" src="./Image/1/1-1-1.jpeg" width="500" />
+  </p>
+<figcaption> The LD-UNet CNN model </figcaption>
+<p><img alt="Image title" src="../Image/1/1-1-2.jpeg" width="500" />
+  </p>
+<figcaption> The custom Dilation Residual Block </figcaption>
+</figure>
+<p>The first DSC involves a dilated depthwise convolution with a 3×3 kernel, dilation rate of 2 and stride 1 to <strong>increase the receptive field</strong> of the convolution. The second DSC involves a depthwise convolution with a 1×1 kernel, acting as the identity <strong>shortcut</strong> of the residual block.</p>
+<p>Compare with other model -&gt; best trade-off between param &amp; accuracy</p>
+<figure>
+<p><img alt="Image title" src="../Image/1/1-1-3.jpeg" width="500" />
+  </p>
+<figcaption> Performance comparision </figcaption>
+</figure>
+<p><code>FPGA architecture</code></p>
+<p>ZYNQ分为两大部分——PS和PL：</p>
+<ul>
+<li>PS——post-processing</li>
+<li>PL——pre-processing(kernal) &amp; inference(DPU)</li>
+</ul>
+<figure>
+<p><img alt="Image title" src="../Image/1/1-1-4.jpeg" width="500" />
+  </p>
+<figcaption> The FPGA processing architecture </figcaption>
+</figure>
+<p><code>result</code></p>
+<figure>
+<p><img alt="Image title" src="../Image/1/1-1-5.jpeg" width="500" />
+  </p>
+<figcaption> Resources utilization </figcaption>
+<p><img alt="Image title" src="../Image/1/1-1-6.jpeg" width="500" />
+  </p>
+<figcaption> Execution time </figcaption>
+</figure>
+<h2 id="cloudsatnet-1-fpga-based-hardware-accelerated-quantized-cnn-for-satellite-on-board-cloud-coverage-classification"><a href="https://www.semanticscholar.org/reader/5117475276af7c26e1f237241159d72ebda16f13"><code>CloudSatNet-1: FPGA-Based Hardware-Accelerated Quantized CNN for Satellite On-Board Cloud Coverage Classification</code></a></h2>
+<h3 id="summary_1">Summary</h3>
+<p><code>云层覆盖分类CNN的FPGA加速</code></p>
+<div class="grid">
+<ul>
+<li><strong>Network</strong>: CloudSatNet-1</li>
+<li><strong>Dataset</strong>: L8 biome Dataset</li>
+<li><strong>Device</strong>: Xilinx Zynq-7020</li>
+</ul>
+</div>
+<div class="admonition tip">
+<p class="admonition-title">Why cloud coverage classification?</p>
+<p>satellite data <img alt="⬆" class="twemoji" src="https://cdn.jsdelivr.net/gh/jdecked/twemoji@14.1.2/assets/72x72/2b06.png" title=":arrow_up:" /> <img alt="👉" class="twemoji" src="https://cdn.jsdelivr.net/gh/jdecked/twemoji@14.1.2/assets/72x72/1f449.png" title=":point_right:" /> downlink resourcecs tight <img alt="👉" class="twemoji" src="https://cdn.jsdelivr.net/gh/jdecked/twemoji@14.1.2/assets/72x72/1f449.png" title=":point_right:" /> on-board classification</p>
+<p>通过分类丢弃被云覆盖的卫星图像，节省传输带宽</p>
+</div>
+<p><code>method</code></p>
+<p>The current methods for cloud coverage estimation or classification are mainly categorized into <strong>traditional</strong> and <strong>machine-learning-based</strong> approaches</p>
+<div class="tabbed-set tabbed-alternate" data-tabs="1:3"><input checked="checked" id="__tabbed_1_1" name="__tabbed_1" type="radio" /><input id="__tabbed_1_2" name="__tabbed_1" type="radio" /><input id="__tabbed_1_3" name="__tabbed_1" type="radio" /><div class="tabbed-labels"><label for="__tabbed_1_1">Threshold-based (fixed or adaptive) method</label><label for="__tabbed_1_2">Time differentiation</label><label for="__tabbed_1_3">Statistical methods</label></div>
+<div class="tabbed-content">
+<div class="tabbed-block">
+<p>Rely on a visible reflection and infrared temperature of the clouds <img alt="➡" class="twemoji" src="https://cdn.jsdelivr.net/gh/jdecked/twemoji@14.1.2/assets/72x72/27a1.png" title=":arrow_right:" /> performance weakens on low-contrasted images</p>
+</div>
+<div class="tabbed-block">
+<p>Do not consider changes in the top of atmosphere reflectance affected by floods.</p>
+</div>
+<div class="tabbed-block">
+<p>Combine spectral and spatial features extracted from RSIs with classical machine learning algorithms (support vector machine, decision tree), but they lack to obtain the desired results</p>
+</div>
+</div>
+</div>
+<p><code>neural network</code></p>
+<figure>
+<p><img alt="Image title" src="../Image/2/1-2-1.jpeg" width="500" />
+  </p>
+<figcaption> CloudSatNet-1 architecture </figcaption>
+</figure>
+<div class="admonition tip">
+<p class="admonition-title">About quantization</p>
+<ul>
+<li>effect: param <img alt="⬇" class="twemoji" src="https://cdn.jsdelivr.net/gh/jdecked/twemoji@14.1.2/assets/72x72/2b07.png" title=":arrow_down:" />  accuracy <img alt="⬆" class="twemoji" src="https://cdn.jsdelivr.net/gh/jdecked/twemoji@14.1.2/assets/72x72/2b06.png" title=":arrow_up:" />  power consumption <img alt="⬆" class="twemoji" src="https://cdn.jsdelivr.net/gh/jdecked/twemoji@14.1.2/assets/72x72/2b06.png" title=":arrow_up:" />  execution time <img alt="⬇" class="twemoji" src="https://cdn.jsdelivr.net/gh/jdecked/twemoji@14.1.2/assets/72x72/2b07.png" title=":arrow_down:" /></li>
+<li>weight &amp; activations quantization对 <strong>网络性能</strong> 影响不大，但可以减小 <strong>memory footprint</strong> 方便在FPGA上的 <strong>部署</strong> .</li>
+</ul>
+</div>
+<p>主要进行4-bit量化，头尾两层对量化更敏感，因此采用8-bit量化</p>
+<p><code>workflow</code></p>
+<figure>
+<p><img alt="Image title" src="../Image/2/1-2-2.jpeg" width="500" />
+  </p>
+<figcaption>  Scheme of proposed workflow </figcaption>
+</figure>
+<div class="highlight"><span class="filename">Quantization Step</span><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>1. floating point model -&gt; quantized onnx model   with QAT
+<a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a>2. quantized onnx model -&gt; HLS code   with FINN framework
+<a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a>3. HLS code -&gt; bit file    with Vivado
+<a id="__codelineno-0-4" name="__codelineno-0-4" href="#__codelineno-0-4"></a>4. deploy on FPGA
+</code></pre></div>
+<p><code>result</code></p>
+<div class="tabbed-set tabbed-alternate" data-tabs="2:4"><input checked="checked" id="__tabbed_2_1" name="__tabbed_2" type="radio" /><input id="__tabbed_2_2" name="__tabbed_2" type="radio" /><input id="__tabbed_2_3" name="__tabbed_2" type="radio" /><input id="__tabbed_2_4" name="__tabbed_2" type="radio" /><div class="tabbed-labels"><label for="__tabbed_2_1">Metrics for different BW (including snow/ice)</label><label for="__tabbed_2_2">Relationship between ACC and FPR</label><label for="__tabbed_2_3">Metrics while deploying on FPGA</label><label for="__tabbed_2_4">Resource utilization</label></div>
+<div class="tabbed-content">
+<div class="tabbed-block">
+<p><figure markdown>
+  <img alt="Image title" src="../Image/2/1-2-3.jpeg" width="500" />
+  <figcaption> Results of cloud coverage classification for best-performed models </figcaption>
+</figure></p>
+</div>
+<div class="tabbed-block">
+<p><figure markdown>
+  <img alt="Image title" src="../Image/2/1-2-4.jpeg" width="500" />
+  <figcaption> Dependence of model ACC on inverse FPR value </figcaption>
+</figure></p>
+</div>
+<div class="tabbed-block">
+<p><figure markdown>
+  <img alt="Image title" src="../Image/2/1-2-5.jpeg" width="500" />
+  <figcaption> Results of cloud coverage classification for best-performed quantized models on FPGA </figcaption>
+</figure></p>
+</div>
+<div class="tabbed-block">
+<p><figure markdown>
+  <img alt="Image title" src="../Image/2/1-2-6.jpeg" width="500" />
+  <figcaption> FPGA resource utilization and performance for different model bit widths and folding setup </figcaption>
+</figure></p>
+</div>
+</div>
+</div>
+<div class="admonition tip">
+<p class="admonition-title">Tip</p>
+<p>部署在FPGA上只有4/3/2 bit model，因为32 bit占用资源过多无法部署.</p>
+</div>
+<p>snow/ice类别与cloud coverage比较像，难以有效识别.</p>
+<div class="tabbed-set tabbed-alternate" data-tabs="3:3"><input checked="checked" id="__tabbed_3_1" name="__tabbed_3" type="radio" /><input id="__tabbed_3_2" name="__tabbed_3" type="radio" /><input id="__tabbed_3_3" name="__tabbed_3" type="radio" /><div class="tabbed-labels"><label for="__tabbed_3_1">Snow/Ice without cloud coverage</label><label for="__tabbed_3_2">Water with cloud coverage</label><label for="__tabbed_3_3">Metrics for different biomes</label></div>
+<div class="tabbed-content">
+<div class="tabbed-block">
+<p><figure markdown>
+  <img alt="Image title" src="../Image/2/1-2-7.jpeg" width="500" />
+  <figcaption> Snow/Ice </figcaption>
+</figure></p>
+</div>
+<div class="tabbed-block">
+<p><figure markdown>
+  <img alt="Image title" src="../Image/2/1-2-8.jpeg" width="500" />
+  <figcaption> Water </figcaption>
+</figure></p>
+</div>
+<div class="tabbed-block">
+<p><figure markdown>
+  <img alt="Image title" src="../Image/2/1-2-9.jpeg" width="500" />
+  <figcaption> Results of cloud coverage classification for best-performed 4-bit width models per biome </figcaption>
+</figure></p>
+</div>
+</div>
+</div>
+<div class="admonition tip">
+<p class="admonition-title">Try to exclude snow/ice</p>
+<p>将snow/ice类别排除进行测试，识别新能显著提升.</p>
+</div>
+<p><code>flaw</code></p>
+<ul>
+<li>High value of FPR on cloud-like feature (e.g. snow/ice).    <img alt="🛠" class="twemoji" src="https://cdn.jsdelivr.net/gh/jdecked/twemoji@14.1.2/assets/72x72/1f6e0.png" title=":tools:" /> multi-spectral bands</li>
+<li>Original L8 biome dataset were merged to form a binary problem.</li>
+<li>Did not cover the effects of the radiation on the cloud detection system.</li>
+</ul>
+<h3 id="question">Question</h3>
+<div class="admonition example">
+<p class="admonition-title">宁愿多处理负样本也不愿意丢弃正样本，不是应该使FNR(False Negative Rate)更低吗?</p>
+<p>However, rather than the highest overall accuracy, this study emphasizes on the low FPR (it is more convenient to process a redundant image than to discard the relevant one).</p>
+</div>
+<div class="admonition example">
+<p class="admonition-title">没有具体说怎么控制network throughput. </p>
+<p>Based on the estimated number of cycles per layer reported in Table 3, it is visible that a bottle-neck in the first layer limited the optimal throughput, and it would require a change in the network architecture to allow a higher throughput target. It was demonstrated that the network throughput can be controlled to target a specific FPS desired by the needs of the mission.</p>
+</div>
+<h2 id="fpga-based-implementation-of-ship-detection-for-satellite-on-board-processing"><a href="https://ieeexplore.ieee.org/stamp/stamp.jsp?tp=&amp;arnumber=9933643"><code>FPGA-Based Implementation of Ship Detection for Satellite On-Board Processing</code></a></h2>
+<h3 id="summary_2">Summary</h3>
+<p><code>卫星在轨船只检测任务</code></p>
+<div class="grid cards">
+<ul>
+<li><strong>Ship Detection Algorithm</strong></li>
+<li><strong>Optimized Method</strong></li>
+<li><strong>FPGA Architecture</strong></li>
+<li><strong>Device</strong>: Xilinx XQR5VFX130</li>
+</ul>
+</div>
+<div class="tabbed-set tabbed-alternate" data-tabs="4:2"><input checked="checked" id="__tabbed_4_1" name="__tabbed_4" type="radio" /><input id="__tabbed_4_2" name="__tabbed_4" type="radio" /><div class="tabbed-labels"><label for="__tabbed_4_1">Hardware-oriented Clustering</label><label for="__tabbed_4_2">Data-buffer Cycle</label></div>
+<div class="tabbed-content">
+<div class="tabbed-block">
+<p>Each processing engine can implement a sort of image operation functions, which has a similar regularity of operation and accessing.</p>
+</div>
+<div class="tabbed-block">
+<p>The DBC provides a method to analyze the memory occupancy period. The memory reuse rules for intermediate are designed according to DBC.</p>
+</div>
+</div>
+</div>
+<figure>
+<p><img alt="Image title" src="../Image/3/1-3-1.jpeg" width="700" />
+  </p>
+<figcaption> Workflow of the proposed optimization mapping method </figcaption>
+</figure>
+<p><code>Hardware-oriented Clustering</code></p>
+<p>regularity of data reading and writing -&gt; clustering processing engine </p>
+<p>According to Overlap/Non-overlap &amp; Whole/Partial Pixals.</p>
+<figure>
+<p><img alt="Image title" src="../Image/3/1-3-2.jpeg" width="500" />
+  </p>
+<figcaption> Data accessing and seeking addressing regularity </figcaption>
+</figure>
+<div class="admonition tip">
+<p class="admonition-title">Tip</p>
+<p>覆盖的数据可以保留使用，避免重复读取；并不是所有操作都需要窗口中的所有像素值.</p>
+</div>
+<p>5 categories:</p>
+<ul>
+<li>overlaping and whole data</li>
+<li>non-overlaping and whole data</li>
+<li>non-overlaping and partial data</li>
+<li>overlaping and adjacency(partial) data</li>
+<li>single pixel traversal</li>
+</ul>
+<figure>
+<p><img alt="Image title" src="../Image/3/1-3-3.jpeg" width="700" />
+  </p>
+<figcaption> Example for 5 categories </figcaption>
+</figure>
+<p>Compare clustering method with traditional method.</p>
+<div class="tabbed-set tabbed-alternate" data-tabs="5:2"><input checked="checked" id="__tabbed_5_1" name="__tabbed_5" type="radio" /><input id="__tabbed_5_2" name="__tabbed_5" type="radio" /><div class="tabbed-labels"><label for="__tabbed_5_1">7 processing modules</label><label for="__tabbed_5_2">3 processing modules</label></div>
+<div class="tabbed-content">
+<div class="tabbed-block">
+<p><figure markdown>
+  <img alt="Image title" src="../Image/3/1-3-4.jpeg" width="500" />
+  <figcaption> Traditional method </figcaption>
+</figure></p>
+</div>
+<div class="tabbed-block">
+<p><figure markdown>
+  <img alt="Image title" src="../Image/3/1-3-5.jpeg" width="500" />
+  <figcaption> Clustering method </figcaption>
+</figure></p>
+</div>
+</div>
+</div>
+<div class="admonition tip">
+<p class="admonition-title">Tip</p>
+<p>该方法不改变流程，只起到复用模块，节省计算资源的用处.</p>
+</div>
+<p><code>Data-buffer Cycle</code></p>
+<p>We assume that the intermediate data are generated in the Nth processing step and used by the Mth processing step. Then, the DBC is defined as M-N. The length of the DBC is equivalent to the total time that the data takes up in memory.</p>
+<p>3 categories:</p>
+<ul>
+<li>DBC = 1 -&gt; short</li>
+<li>DBC &gt; 60% of all steps -&gt; long</li>
+<li>remain -&gt; median</li>
+</ul>
+<div class="admonition example">
+<p class="admonition-title">DBC(D1) = 4  generated in step1, used in step 5</p>
+<p><figure markdown>
+  <img alt="Image title" src="../Image/3/1-3-6.jpeg" width="500" />
+  <figcaption> Example of processing algorithm </figcaption>
+</figure></p>
+</div>
+<p><code>implementation</code></p>
+<figure>
+<p><img alt="Image title" src="../Image/3/1-3-7.jpeg" width="700" />
+  </p>
+<figcaption> Architecture overview </figcaption>
+</figure>
+<p>每个PEU(Processing Engine Unit)由相同的几部分构成:</p>
+<ul>
+<li><strong>operation module</strong>: 执行计算操作(clutering后的操作)</li>
+<li><strong>schedule module</strong>: 根据timing判断该进行什么操作，下发给operation module</li>
+<li><strong>resister control module</strong>: 变更参数，read enable等信号</li>
+<li><strong>monitor module</strong>: 用于调试观察</li>
+</ul>
+<div class="tabbed-set tabbed-alternate" data-tabs="6:5"><input checked="checked" id="__tabbed_6_1" name="__tabbed_6" type="radio" /><input id="__tabbed_6_2" name="__tabbed_6" type="radio" /><input id="__tabbed_6_3" name="__tabbed_6" type="radio" /><input id="__tabbed_6_4" name="__tabbed_6" type="radio" /><input id="__tabbed_6_5" name="__tabbed_6" type="radio" /><div class="tabbed-labels"><label for="__tabbed_6_1">overlaping and whole</label><label for="__tabbed_6_2">non-overlaping and whole</label><label for="__tabbed_6_3">non-overlaping and partial</label><label for="__tabbed_6_4">overlaping and adjacency(partial)</label><label for="__tabbed_6_5">single pixel traversal</label></div>
+<div class="tabbed-content">
+<div class="tabbed-block">
+<p><figure markdown>
+  <img alt="Image title" src="../Image/3/1-3-8.jpeg" width="500" />
+  <figcaption> Overlapping and overall data engine </figcaption>
+</figure></p>
+</div>
+<div class="tabbed-block">
+<p><figure markdown>
+  <img alt="Image title" src="../Image/3/1-3-9.jpeg" width="500" />
+  <figcaption> Nonoverlapping and overall data engine </figcaption>
+</figure></p>
+</div>
+<div class="tabbed-block">
+<p><figure markdown>
+  <img alt="Image title" src="../Image/3/1-3-10.jpeg" width="500" />
+  <figcaption> Nonoverlapping and partial data engine </figcaption>
+</figure></p>
+</div>
+<div class="tabbed-block">
+<p><figure markdown>
+  <img alt="Image title" src="../Image/3/1-3-11.jpeg" width="500" />
+  <figcaption> Overlapping and adjacency data engine </figcaption>
+</figure></p>
+</div>
+<div class="tabbed-block">
+<p><figure markdown>
+  <img alt="Image title" src="../Image/3/1-3-12.jpeg" width="500" />
+  <figcaption> Single pixel traversal engine </figcaption>
+</figure></p>
+</div>
+</div>
+</div>
+<p>MU(Memory Unit) is divided into 2 part: On-chip &amp; Off-chip</p>
+<figure>
+<p><img alt="Image title" src="../Image/3/1-3-13.jpeg" width="500" />
+  </p>
+<figcaption> MU Statistics </figcaption>
+</figure>
+<p><code>result</code></p>
+<figure>
+<p><img alt="Image title" src="../Image/3/1-3-14.jpeg" width="500" />
+  </p>
+<figcaption> Detection example </figcaption>
+</figure>
+<p>Compare with other devices using the same algorithm. Using <strong>OPENCV</strong> to add some image-processing function.</p>
+<table>
+<thead>
+<tr>
+<th style="text-align: center;">CPU</th>
+<th>DSP</th>
+<th>FPGA</th>
+<th>FPGA</th>
+<th>FPGA</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: center;">DELL workstation<br/>(E5-2650, 8G RAM)</td>
+<td>TS201<br/>(800MHz)</td>
+<td>pipeline</td>
+<td>HLS</td>
+<td>proposed method</td>
+</tr>
+</tbody>
+</table>
+<figure>
+<p><img alt="Image title" src="../Image/3/1-3-15.jpeg" width="500" />
+  </p>
+<figcaption> Resource consumption results of different devices </figcaption>
+</figure>
+<p><code>real-time performance</code></p>
+<figure>
+<p><img alt="Image title" src="../Image/3/1-3-16.jpeg" width="500" />
+  </p>
+<figcaption> Resource consumption results of different devices </figcaption>
+</figure>
+<p>当<span class="arithmatex">\(\tau = \frac{T_{Tr}}{Max(T_{Im},T_{Dp})} &gt; 1\)</span>时，可实现real-time performance<sup id="fnref:1"><a class="footnote-ref" href="#fn:1">1</a></sup>.</p>
+<ul>
+<li>
+<p><span class="arithmatex">\(T_{Tr}\)</span>:原始数据获取时间</p>
+</li>
+<li>
+<p><span class="arithmatex">\(T_{Im}\)</span>:image focusing时间</p>
+</li>
+<li>
+<p><span class="arithmatex">\(T_{Dp}\)</span>:image detection时间</p>
+</li>
+</ul>
+<h3 id="question_1">Question</h3>
+<div class="admonition example">
+<p class="admonition-title">这几句话没说清楚，short 和 long 都是用一样的存储单元?</p>
+<p>The short DBC data are arranged to use the same storage. The medium DBC data can reuse memory in the case that the algorithm processing flows arenot affected. The standalone storage is reserved for the long DBC data.</p>
+</div>
+<div class="admonition example">
+<p class="admonition-title">What is FPGA with pipeline and HLS?</p>
+</div>
+<h2 id="an-fpga-based-hybrid-neural-network-accelerator-for-embedded-satellite-image-classification"><a href="https://ieeexplore.ieee.org/document/9180625"><code>An FPGA-Based Hybrid Neural Network Accelerator for Embedded Satellite Image Classification</code></a></h2>
+<h3 id="summary_3">Summary</h3>
+<p><code>混合FPGA网络模型加速器架构</code></p>
+<div class="grid cards">
+<ul>
+<li><strong>Application</strong>: Cloud coverage classification</li>
+<li><strong>Formal Neural Network</strong>: Feature extraction</li>
+<li><strong>Spiking Neural Network</strong>: Classification (Fully connect)</li>
+<li><strong>Device</strong>: Xilinx Cyclone V FPGA</li>
+</ul>
+</div>
+<figure>
+<p><img alt="Image title" src="../Image/4/1-4-1.jpeg" width="700" />
+  </p>
+<figcaption> Topology of hybrid network </figcaption>
+</figure>
+<p><code>formal domain</code></p>
+<p>具有高度并行性</p>
+<div class="tabbed-set tabbed-alternate" data-tabs="7:2"><input checked="checked" id="__tabbed_7_1" name="__tabbed_7" type="radio" /><input id="__tabbed_7_2" name="__tabbed_7" type="radio" /><div class="tabbed-labels"><label for="__tabbed_7_1">Convolution layer</label><label for="__tabbed_7_2">Maxpoolong layer</label></div>
+<div class="tabbed-content">
+<div class="tabbed-block">
+<div class="admonition example">
+<p class="admonition-title">About filter-wise adder</p>
+<p>filter-wise filter可以同时对不同channel的feature map进行计算，需要同时存储<span class="arithmatex">\(C_{in} \times C_{out}\)</span>个conv kernal.</p>
+</div>
+<p><figure markdown>
+  <img alt="Image title" src="../Image/4/1-4-2.jpeg" width="500" />
+  <figcaption> Schematic representation of the convolution layer architecture </figcaption>
+</figure></p>
+</div>
+<div class="tabbed-block">
+<p>Maxpooling consists in dividing the 2D input in patches, extracting the maximum value of each patch, and building a sub-sampled version of the input with only those maximum values.</p>
+</div>
+</div>
+</div>
+<p><code>interface between formal and spiking domain</code></p>
+<ul>
+<li>
+<p>Data flow: Flattening Module -&gt; Spiking Generation Cell</p>
+</li>
+<li>
+<p>Spikes are represented by 2 co-occurrent signal: o_spike &amp; o_addr.</p>
+</li>
+</ul>
+<p><code>spiking domain</code></p>
+<p><strong>Integrating</strong> weighted input events, <strong>triggering</strong> an output event when the accumulator overpasses a <strong>threshold</strong>, and <strong>resetting the accumulator</strong> when emitting an output event.</p>
+<figure>
+<p><img alt="Image title" src="../Image/4/1-4-4.jpeg" width="700" />
+  </p>
+<figcaption> Schematic representation of classification modules </figcaption>
+</figure>
+<p>10 * IF_1 &amp; 2 * IF_2 &amp; Terminate Delta Module -&gt; count spikes and enact classification outcome.</p>
+<div class="admonition tip">
+<p class="admonition-title">Tip</p>
+<p>只有spike generation module后的spike需要o_addr，其他直接通过neuron间的连接传递信息.</p>
+</div>
+<p><code>architecture</code></p>
+<figure>
+<p><img alt="Image title" src="../Image/4/1-4-5.jpeg" width="500" />
+  </p>
+<figcaption> Schematic representation of the full system architecture </figcaption>
+</figure>
+<ol>
+<li>ARM A9读取图片并分割，储存在DDR中.</li>
+<li>scheduler根据image pitch地址设置DMA，并触发CNN accelerator.</li>
+<li>scheduler将结果存回DDR中.</li>
+</ol>
+<p><code>result</code></p>
+<figure>
+<p><img alt="Image title" src="../Image/4/1-4-6.jpeg" width="500" />
+  </p>
+<figcaption> Results of our Hybrid Architecture and its formal counterpart </figcaption>
+</figure>
+<h3 id="question_2">Question</h3>
+<div class="admonition example">
+<p class="admonition-title">为什么有/255?period范围不是<span class="arithmatex">\([\frac{1}{MaxFreq},\frac{1}{MinFreq}]\)</span>.</p>
+<p><figure markdown>
+  <img alt="Image title" src="../Image/4/1-4-3.jpeg" width="500" />
+  <figcaption> Calculate the period for SNN </figcaption>
+</figure></p>
+</div>
+<h2 id="fpga-based-satellite-image-classification-for-water-bodies-detection"><a href="https://ieeexplore.ieee.org/document/9171811"><code>FPGA-based Satellite Image Classification for Water Bodies Detection</code></a></h2>
+<h3 id="summary_4">Summary</h3>
+<p><code>为火情处理提供服务的水体探测分类加速</code></p>
+<div class="grid cards">
+<ul>
+<li><strong>Application</strong>: Water body classification</li>
+<li><strong>Algorithm</strong>: Decision tree and Minimun distance</li>
+<li><strong>Device</strong>: Zynq UltraScale+ FPGA</li>
+</ul>
+</div>
+<div class="tabbed-set tabbed-alternate" data-tabs="8:2"><input checked="checked" id="__tabbed_8_1" name="__tabbed_8" type="radio" /><input id="__tabbed_8_2" name="__tabbed_8" type="radio" /><div class="tabbed-labels"><label for="__tabbed_8_1">Origin</label><label for="__tabbed_8_2">Result</label></div>
+<div class="tabbed-content">
+<div class="tabbed-block">
+<p><figure markdown>
+  <img alt="Image title" src="../Image/5/1-5-1.jpeg" width="300" />
+  <figcaption> Original RGB Image </figcaption>
+</figure></p>
+</div>
+<div class="tabbed-block">
+<p><figure markdown>
+  <img alt="Image title" src="../Image/5/1-5-2.jpeg" width="300" />
+  <figcaption> Output of Decision Tree Classifier </figcaption>
+</figure></p>
+</div>
+</div>
+</div>
+<p>If the project to be implemented requires <strong>lot of calculations</strong> and they have the possibility to fully be <strong>parallelized</strong>, <strong>FPGA</strong> benefits of its high number of Digital Signal Processors to accelerate these calculations. If a more <strong>sequential approach</strong> is taken, <strong>CPU</strong> will perform the same result faster.</p>
+<div class="admonition example">
+<p class="admonition-title">decision tree时CPU比FPGA快400倍，minimun distance时FPGA比CPU快4.5倍.</p>
+</div>
+<h2 id="fpga-implementation-of-a-hardware-optimized-automatic-target-detection-and-classification-algorithm-for-hyperspectral-image-analysis"><a href="https://ieeexplore.ieee.org/stamp/stamp.jsp?tp=&amp;arnumber=9817130"><code>FPGA Implementation of a Hardware Optimized Automatic Target Detection and Classification Algorithm for Hyperspectral Image Analysis</code></a></h2>
+<h3 id="summary_5">Summary</h3>
+<p><code>FPGA实现超光谱图像自动识别与分类</code></p>
+<div class="grid cards">
+<ul>
+<li><strong>Application</strong>: ATDCA on HSI (Hyper Spectral Image)</li>
+<li><strong>GS orthogonalization</strong></li>
+<li><strong>Device</strong>: Zynq Ultrascale + ZCU106 System</li>
+<li><strong>Advantage</strong>: Execution time and power consumption</li>
+</ul>
+</div>
+<h2 id="an-fpga-based-hardware-accelerator-for-cnns-inference-on-board-satellites-benchmarking-with-myriad-2-based-solution-for-the-cloudscout-case-study"><a href="https://www.semanticscholar.org/reader/b3e29278e89c995a9fabf856d4aed21fe0c93d08"><code>An FPGA-Based Hardware Accelerator for CNNs Inference on Board Satellites: Benchmarking with Myriad 2-Based Solution for the CloudScout Case Study</code></a></h2>
+<h3 id="summary_6">Summary</h3>
+<p><code>基于CloudScout的CNN加速器</code></p>
+<div class="grid cards">
+<ul>
+<li><strong>Application</strong>: Cloud detection on hyperspectral images</li>
+<li><strong>Study Case</strong>: CloudScout</li>
+<li><strong>Device</strong>: Zynq Ultrascale+ ZCU106</li>
+<li><strong>Counterpart</strong>: Intel Mariad 2 VPU</li>
+</ul>
+</div>
+<div class="admonition example">
+<p class="admonition-title">Why not Myriad 2?</p>
+<ul>
+<li><img alt="😃" class="twemoji" src="https://cdn.jsdelivr.net/gh/jdecked/twemoji@14.1.2/assets/72x72/1f603.png" title=":smiley:" /> Achieve good timing performance and reduced power consumption.</li>
+<li><img alt="🥲" class="twemoji" src="https://cdn.jsdelivr.net/gh/jdecked/twemoji@14.1.2/assets/72x72/1f972.png" title=":smiling_face_with_tear:" /> Not designed for space environment (lacking in radiation-tolerant).</li>
+<li><img alt="🥲" class="twemoji" src="https://cdn.jsdelivr.net/gh/jdecked/twemoji@14.1.2/assets/72x72/1f972.png" title=":smiling_face_with_tear:" /> Not customizable. (space-oriented communication protocol, operative system, redundancy structures ...).
+<br/><br/> <img alt="👉" class="twemoji" src="https://cdn.jsdelivr.net/gh/jdecked/twemoji@14.1.2/assets/72x72/1f449.png" title=":point_right:" /> brief LEO mission only</li>
+</ul>
+</div>
+<p><code>accelerator categories</code></p>
+<p>This framework uses single PU architecture.</p>
+<div class="tabbed-set tabbed-alternate" data-tabs="9:3"><input checked="checked" id="__tabbed_9_1" name="__tabbed_9" type="radio" /><input id="__tabbed_9_2" name="__tabbed_9" type="radio" /><input id="__tabbed_9_3" name="__tabbed_9" type="radio" /><div class="tabbed-labels"><label for="__tabbed_9_1"><strong>Single Processing Unit architecture</strong></label><label for="__tabbed_9_2">Streamline architecture</label><label for="__tabbed_9_3">Multiple Shared Processing Units architecture</label></div>
+<div class="tabbed-content">
+<div class="tabbed-block">
+<ul>
+<li>Compute operations of all the layers.</li>
+<li><img alt="😃" class="twemoji" src="https://cdn.jsdelivr.net/gh/jdecked/twemoji@14.1.2/assets/72x72/1f603.png" title=":smiley:" /> Reduce resource exploitation.</li>
+<li><img alt="🥲" class="twemoji" src="https://cdn.jsdelivr.net/gh/jdecked/twemoji@14.1.2/assets/72x72/1f972.png" title=":smiling_face_with_tear:" /> Increased latency and power consumption. (Data access)</li>
+<li>Tiling or the use of additional caches are some of the techniques to reduce the amount of data to store.</li>
+</ul>
+</div>
+<div class="tabbed-block">
+<ul>
+<li>Consists of a cascade of several blocks, one per layer of the network.</li>
+<li><img alt="😃" class="twemoji" src="https://cdn.jsdelivr.net/gh/jdecked/twemoji@14.1.2/assets/72x72/1f603.png" title=":smiley:" /> Reducing latency and power consumption. (only the input image shall be read)</li>
+<li><img alt="😃" class="twemoji" src="https://cdn.jsdelivr.net/gh/jdecked/twemoji@14.1.2/assets/72x72/1f603.png" title=":smiley:" /> Exploiting pipeline.</li>
+<li><img alt="😃" class="twemoji" src="https://cdn.jsdelivr.net/gh/jdecked/twemoji@14.1.2/assets/72x72/1f603.png" title=":smiley:" /> Allows optimizing the architecture of specific layers at the price of an increased latency.</li>
+<li><img alt="🥲" class="twemoji" src="https://cdn.jsdelivr.net/gh/jdecked/twemoji@14.1.2/assets/72x72/1f972.png" title=":smiling_face_with_tear:" /> Overhead in terms of hardware resources.</li>
+</ul>
+</div>
+<div class="tabbed-block">
+<ul>
+<li>Exploiting several PUs shared by layers with similar computation requirements.</li>
+<li><img alt="😃" class="twemoji" src="https://cdn.jsdelivr.net/gh/jdecked/twemoji@14.1.2/assets/72x72/1f603.png" title=":smiley:" /> Better utilization of hardware and an increment of throughput compared to the solution using a single PU.</li>
+<li><img alt="🥲" class="twemoji" src="https://cdn.jsdelivr.net/gh/jdecked/twemoji@14.1.2/assets/72x72/1f972.png" title=":smiling_face_with_tear:" /> Reduced portability. (association of PUs)</li>
+</ul>
+</div>
+</div>
+</div>
+<p><code>model quantization</code></p>
+<p>Network architecture as following.</p>
+<figure>
+<p><img alt="Image title" src="../Image/7/1-7-1.jpeg" width="500" />
+  </p>
+<figcaption> CloudScout Model Architecture </figcaption>
+</figure>
+<p>参考文献做法，各层量化位数由下式给出</p>
+<div class="arithmatex">\[b_{in}|_{layer=q+1} = (b_{out}-b_{tr}-b_{sat})|_{layer=q}\]</div>
+<p><code>accelerator architecture</code></p>
+<figure>
+<p><img alt="Image title" src="../Image/7/1-7-2.jpeg" width="500" />
+  </p>
+<figcaption> CloudScout Hardware Accelerator architecture </figcaption>
+</figure>
+<div class="tabbed-set tabbed-alternate" data-tabs="10:4"><input checked="checked" id="__tabbed_10_1" name="__tabbed_10" type="radio" /><input id="__tabbed_10_2" name="__tabbed_10" type="radio" /><input id="__tabbed_10_3" name="__tabbed_10" type="radio" /><input id="__tabbed_10_4" name="__tabbed_10" type="radio" /><div class="tabbed-labels"><label for="__tabbed_10_1">Custom Cache</label><label for="__tabbed_10_2">Shared Convolutional Layer</label><label for="__tabbed_10_3">Filter Memory</label><label for="__tabbed_10_4">Max Pooling</label></div>
+<div class="tabbed-content">
+<div class="tabbed-block">
+<ul>
+<li>Storing tiles of the feature maps.</li>
+<li>The cache can be filled while the accelerator is performing computations.</li>
+<li>Parameter: <span class="arithmatex">\(C_{width}\)</span>, <span class="arithmatex">\(C_{depth}\)</span> and N_{co}.</li>
+<li>Memory footprint: <span class="arithmatex">\(M_{fp} = C_{width} \times C_{depth} \times N_{co}\)</span></li>
+</ul>
+<p><figure markdown>
+  <img alt="Image title" src="../Image/7/1-7-3.jpeg" width="500" />
+  <figcaption> Custom cache scheduling example </figcaption>
+</figure></p>
+<div class="admonition tip">
+<p class="admonition-title">About selecting parameters</p>
+<p><span class="arithmatex">\(C_{depth}\)</span> is given by evaluating the minimum storage resources needed by each layer to start computing. <span class="arithmatex">\(M_{fp}\)</span> should not to exceed the available FPGA on-chip memory resources.</p>
+</div>
+</div>
+<div class="tabbed-block"></div>
+<div class="tabbed-block"></div>
+<div class="tabbed-block"></div>
+</div>
+</div>
+<p><code>result</code></p>
+<p>Deploy on Zynq Ultrascale+ ZCU106 Development Board and <strong>rad-hard</strong> Xilinx Kintex Ultrascale XQRKU060</p>
+<p><br/> Output as following.</p>
+<figure>
+<p><img alt="Image title" src="../Image/7/1-7-5.jpeg" width="500" />
+  </p>
+<figcaption> Examples of accelerator outputs </figcaption>
+</figure>
+<div class="tabbed-set tabbed-alternate" data-tabs="11:2"><input checked="checked" id="__tabbed_11_1" name="__tabbed_11" type="radio" /><input id="__tabbed_11_2" name="__tabbed_11" type="radio" /><div class="tabbed-labels"><label for="__tabbed_11_1">Zynq Ultrascale+ ZCU106</label><label for="__tabbed_11_2">Kintex Ultrascale XQRKU060</label></div>
+<div class="tabbed-content">
+<div class="tabbed-block">
+<p><figure markdown>
+  <img alt="Image title" src="../Image/7/1-7-4.jpeg" width="500" />
+  <figcaption> CloudScout characterization system </figcaption>
+</figure></p>
+<ul>
+<li>PS-Master-Accelerator-Slave interface负责读写加速器状态.
+​* Accelerator-Master-PS-Slave interface负责数据传送.</li>
+</ul>
+<div class="admonition tip">
+<p class="admonition-title">Tip</p>
+<p>Accelerator AXI Master使用asynchronous FIFO, 使数据读取时钟频率独立于加速器频率, 减少transfer overhead times.</p>
+</div>
+<p><figure markdown>
+  <img alt="Image title" src="../Image/7/1-7-6.jpeg" width="500" />
+  <figcaption> Measured results summary </figcaption>
+  <img alt="Image title" src="../Image/7/1-7-7.jpeg" width="500" />
+  <figcaption> Resource occupation for the entire system </figcaption>
+</figure></p>
+<ul>
+<li>UltraRAM -&gt; Custom Cache</li>
+<li>BlockRAM -&gt; Filters and AXI FIFOs</li>
+<li>DSP -&gt; MAC modules in the SCL and in the Fully-Connected layers</li>
+</ul>
+</div>
+<div class="tabbed-block">
+<p><figure markdown>
+  <img alt="Image title" src="../Image/7/1-7-8.jpeg" width="500" />
+  <figcaption> Measured results summary </figcaption>
+  <img alt="Image title" src="../Image/7/1-7-9.jpeg" width="500" />
+  <figcaption> Resource occupation for the entire system </figcaption>
+</figure></p>
+<div class="admonition tip">
+<p class="admonition-title">Tip</p>
+<p>The XQRKU060 has worse timing performance with respect to the design implemented on the ZCU106 board because it belongs to an older FPGA family (Ultrascale vs. UltraScale+).</p>
+</div>
+</div>
+</div>
+</div>
+<p><code>benchmark</code></p>
+<ul>
+<li>fault tolerance <img alt="😃" class="twemoji" src="https://cdn.jsdelivr.net/gh/jdecked/twemoji@14.1.2/assets/72x72/1f603.png" title=":smiley:" /></li>
+</ul>
+<p><strong>Increased clock frequencies</strong>, <strong>reduced feature sizes</strong>, and <strong>reduced supply and threshold voltages</strong>, harm the fault tolerance of the circuit.
+<br>FPGA有更好的fault tolerance, 有更高的LET (TID高并不构成优势).</p>
+<figure>
+<p><img alt="Image title" src="../Image/7/1-7-10.jpeg" width="500" />
+  </p>
+<figcaption> Examples of accelerator outputs </figcaption>
+</figure>
+<ul>
+<li>cost <img alt="🥲" class="twemoji" src="https://cdn.jsdelivr.net/gh/jdecked/twemoji@14.1.2/assets/72x72/1f972.png" title=":smiling_face_with_tear:" /></li>
+</ul>
+<p>Bad environment(wide range of temperature, absence of convection, strong vibrations...)
+<br/>-&gt; Complex producing
+<br/>-&gt; High cost</p>
+<ul>
+<li>flexibility <img alt="😃" class="twemoji" src="https://cdn.jsdelivr.net/gh/jdecked/twemoji@14.1.2/assets/72x72/1f603.png" title=":smiley:" /></li>
+</ul>
+<p>Allowing algorithms and functionalities to be implemented.</p>
+<ul>
+<li>developing time <img alt="🥲" class="twemoji" src="https://cdn.jsdelivr.net/gh/jdecked/twemoji@14.1.2/assets/72x72/1f972.png" title=":smiling_face_with_tear:" /></li>
+</ul>
+<p>The FPGA design flow consists of various phases, such as <strong>coding</strong>, <strong>functional simulation</strong>, <strong>synthesis</strong> and <strong>implementation</strong>, and <strong>system validation</strong>.</p>
+<ul>
+<li>inference time <img alt="😃" class="twemoji" src="https://cdn.jsdelivr.net/gh/jdecked/twemoji@14.1.2/assets/72x72/1f603.png" title=":smiley:" /></li>
+</ul>
+<p>rad-hard device需要额外的protection logic, 导致频率降低能耗增加.
+<br/>This framework chooses values for the configurable parameters of the accelerator with the purpose to minimize the inference time, at the cost of hardware resources and power consumption.</p>
+<figure>
+<p><img alt="Image title" src="../Image/7/1-7-11.jpeg" width="500" />
+  </p>
+<figcaption> Results summary for XCZU7EV, XQRKU060, and Myriad-2 VPU </figcaption>
+</figure>
+<ul>
+<li>power consumption <img alt="🥲" class="twemoji" src="https://cdn.jsdelivr.net/gh/jdecked/twemoji@14.1.2/assets/72x72/1f972.png" title=":smiling_face_with_tear:" /></li>
+</ul>
+<p>FPGAs have greater <strong>static</strong> power consumption, VPU consumes few mW in its <strong>idle state</strong>.
+<br>-&gt; FPGA suitable for online task(continuous infenrence) &amp; VPU suitable for offline task(often rest in idle state).</p>
+<h3 id="question_3">Question</h3>
+<div class="admonition example">
+<p class="admonition-title">Custom Cache的<span class="arithmatex">\(C_{width}\)</span>是一个AXI packet的长度，还是一个data的字长?</p>
+</div>
+<h2 id="h-bnn-fpga-based-binarized-convolutional-neural-network-for-cloud-detection-on-satellite-payload"><a href="https://ieeexplore.ieee.org/document/10227207"><code>H-BNN: FPGA-based binarized convolutional neural network for cloud detection on satellite payload</code></a></h2>
+<h3 id="summary_7">Summary</h3>
+<p><code>基于FPGA的1位宽检测网络</code></p>
+<div class="grid cards">
+<ul>
+<li><strong>Application</strong>: Cloud detection</li>
+<li><strong>Dataset</strong>: By the Sentinel-2 satellite</li>
+<li><strong>Device</strong>: Xilinx Kintex7 410T FPGA</li>
+</ul>
+</div>
+<p><code>work flow</code></p>
+<figure>
+<p><img alt="Image title" src="../Image/8/1-8-1.jpeg" width="500" />
+  </p>
+<figcaption> Cloud classification on-board satellite payload architecture </figcaption>
+</figure>
+<p><code>H-BNN architecture</code></p>
+<p>Convolution -&gt; BinaryConvolution
+<br/>Activation -&gt; Sign
+<br/>Multiplication -&gt; Multiplexer</p>
+<figure>
+<p><img alt="Image title" src="../Image/8/1-8-2.jpeg" width="500" />
+  </p>
+<figcaption> Proposed FPGA-based binarized convolutional neural network </figcaption>
+</figure>
+<p>2:1 multiplexer can be implemented with a simple logic gate.</p>
+<figure>
+<p><img alt="Image title" src="../Image/8/1-8-3.jpeg" width="500" />
+  </p>
+<figcaption> Binary convolution in hardware design </figcaption>
+</figure>
+<div class="admonition tip">
+<p class="admonition-title">Tip</p>
+<p>BNs reduce <strong>sensitivity</strong> to minor input changes, preventing <strong>vanishing gradient</strong> problem, and <strong>accelerating</strong> the training process.</p>
+</div>
+<p><code>system architecture</code></p>
+<figure>
+<p><img alt="Image title" src="../Image/8/1-8-4.jpeg" width="500" />
+  </p>
+<figcaption> Hardware implementation architecute of proposed H-BNN </figcaption>
+</figure>
+<div class="admonition tip">
+<p class="admonition-title">并不是所有数据都是1-bitwise, 仅在convolution进行简化，其他地方仍按正常数据处理.</p>
+</div>
+<h3 id="question_4">Question</h3>
+<div class="admonition example">
+<p class="admonition-title">convolution layer weight变为2：1multiplexer的选择端, 怎么计算梯度并反向传播.</p>
+</div>
+<h2 id="literature-reviewa-survey-of-fpga-based-accelerators-for-convolutional-neural-networks">(Literature Review)<a href="https://embdev.net/attachment/378695/2018_NCAA_Mittal_FPGA_Accelerator_CNN.pdf"><code>A Survey of FPGA-based Accelerators for Convolutional Neural Networks</code></a></h2>
+<h2 id="tile-grained-pipeline-architecture-for-low-latency-cnn-inference"><a href="https://vast.cs.ucla.edu/sites/default/files/publications/PID5488167.pdf"><code>Tile-Grained Pipeline Architecture for Low Latency CNN Inference</code></a></h2>
+<h3 id="summary_8">Summary</h3>
+<p>``</p>
+<div class="grid cards">
+<ul>
+<li><strong>Application</strong>: Cloud detection</li>
+<li><strong>Dataset</strong>: By the Sentinel-2 satellite</li>
+<li><strong>Device</strong>: Xilinx Kintex7 410T FPGA</li>
+</ul>
+</div>
+<h2 id="a-high-performance-fpga-based-accelerator-for-large-scale-convolutional-neural-networks"><a href="https://ieeexplore.ieee.org/document/7577308"><code>A High Performance FPGA-based Accelerator for  Large-Scale Convolutional Neural Networks</code></a></h2>
+<h2 id="mem-opt-a-scheduling-and-data-re-use-system-to-optimize-on-chip-memory-usage-for-cnns-on-board-fpgas"><a href="https://ieeexplore.ieee.org/document/9163269"><code>MEM-OPT: A Scheduling and Data Re-Use System to Optimize On-Chip Memory Usage for CNNs On-Board FPGAs</code></a></h2>
+<h3 id="summary_9">Summary</h3>
+<p><code>针对CNN部署的FPGA内存优化</code></p>
+<div class="grid cards">
+<ul>
+<li><strong>Trade-off</strong>: Bandwidth and on-chip memory</li>
+<li><strong>Device</strong>: Xilinx XC7Z020</li>
+<li><strong>Scheduling algorithm</strong></li>
+<li><strong>Data re-use system</strong></li>
+</ul>
+</div>
+<h2 id="a-complete-design-flow-for-mapping-cnn-onto-embedded-fpga"><a href="https://ieeexplore.ieee.org/document/7930521"><code>A Complete Design Flow for Mapping CNN Onto Embedded FPGA</code></a></h2>
+<h2 id="literature-reviewdeep-learning-on-fpgas-past-present-and-future">(Literature Review)<a href="https://www.semanticscholar.org/reader/ee8c33a09b94377741c8c4e12cfc9174b9bcc7a1"><code>Deep Learning on FPGAs Past, Present, and Future</code></a></h2>
+<div class="footnote">
+<hr />
+<ol>
+<li id="fn:1">
+<p>System can guarantee the outputs continuously in case of continuous inputs.&#160;<a class="footnote-backref" href="#fnref:1" title="Jump back to footnote 1 in the text">&#8617;</a></p>
+</li>
+</ol>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+  <script>var tabs=__md_get("__tabs");if(Array.isArray(tabs))e:for(var set of document.querySelectorAll(".tabbed-set")){var tab,labels=set.querySelector(".tabbed-labels");for(tab of tabs)for(var label of labels.getElementsByTagName("label"))if(label.innerText.trim()===tab){var input=document.getElementById(label.htmlFor);input.checked=!0;continue e}}</script>
+
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+          <button type="button" class="md-top md-icon" data-md-component="top" hidden>
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8v12Z"/></svg>
+  Back to top
+</button>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+    
+      
+      <nav class="md-footer__inner md-grid" aria-label="Footer" >
+        
+          
+          <a href="../" class="md-footer__link md-footer__link--prev" aria-label="Previous: Paper Reading">
+            <div class="md-footer__button md-icon">
+              
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12Z"/></svg>
+            </div>
+            <div class="md-footer__title">
+              <span class="md-footer__direction">
+                Previous
+              </span>
+              <div class="md-ellipsis">
+                Paper Reading
+              </div>
+            </div>
+          </a>
+        
+        
+          
+          <a href="../Chp2/" class="md-footer__link md-footer__link--next" aria-label="Next: Chp2">
+            <div class="md-footer__title">
+              <span class="md-footer__direction">
+                Next
+              </span>
+              <div class="md-ellipsis">
+                Chp2
+              </div>
+            </div>
+            <div class="md-footer__button md-icon">
+              
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M4 11v2h12l-5.5 5.5 1.42 1.42L19.84 12l-7.92-7.92L10.5 5.5 16 11H4Z"/></svg>
+            </div>
+          </a>
+        
+      </nav>
+    
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+    <div class="md-copyright__highlight">
+      &copy; 2023 <a href="https://github.com/crazy-squirrel"  target="_blank" rel="noopener">Songchen Xu</a>
+    </div>
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+        <div class="md-social">
+  
+    
+    
+    
+    
+      
+      
+    
+    <a href="https://github.com/crazy-squirrel" target="_blank" rel="noopener" title="github.com" class="md-social__link">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 480 512"><!--! Font Awesome Free 6.5.1 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2023 Fonticons, Inc.--><path d="M186.1 328.7c0 20.9-10.9 55.1-36.7 55.1s-36.7-34.2-36.7-55.1 10.9-55.1 36.7-55.1 36.7 34.2 36.7 55.1zM480 278.2c0 31.9-3.2 65.7-17.5 95-37.9 76.6-142.1 74.8-216.7 74.8-75.8 0-186.2 2.7-225.6-74.8-14.6-29-20.2-63.1-20.2-95 0-41.9 13.9-81.5 41.5-113.6-5.2-15.8-7.7-32.4-7.7-48.8 0-21.5 4.9-32.3 14.6-51.8 45.3 0 74.3 9 108.8 36 29-6.9 58.8-10 88.7-10 27 0 54.2 2.9 80.4 9.2 34-26.7 63-35.2 107.8-35.2 9.8 19.5 14.6 30.3 14.6 51.8 0 16.4-2.6 32.7-7.7 48.2 27.5 32.4 39 72.3 39 114.2zm-64.3 50.5c0-43.9-26.7-82.6-73.5-82.6-18.9 0-37 3.4-56 6-14.9 2.3-29.8 3.2-45.1 3.2-15.2 0-30.1-.9-45.1-3.2-18.7-2.6-37-6-56-6-46.8 0-73.5 38.7-73.5 82.6 0 87.8 80.4 101.3 150.4 101.3h48.2c70.3 0 150.6-13.4 150.6-101.3zm-82.6-55.1c-25.8 0-36.7 34.2-36.7 55.1s10.9 55.1 36.7 55.1 36.7-34.2 36.7-55.1-10.9-55.1-36.7-55.1z"/></svg>
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    <script id="__config" type="application/json">{"base": "../..", "features": ["navigation.tabs", "navigation.sections", "navigation.top", "navigation.footer", "navigation.indexes", "search.suggest", "search.highlight", "search.share", "content.tabs.link", "content.code.annotate", "content.code.copy", "toc.follow"], "search": "../../assets/javascripts/workers/search.f886a092.min.js", "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}}</script>
+    
+    
+      <script src="../../assets/javascripts/bundle.d7c377c4.min.js"></script>
+      
+        <script src="../../javascripts/mathjax.js"></script>
+      
+        <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+      
+        <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+      
+    
+  </body>
+</html>
